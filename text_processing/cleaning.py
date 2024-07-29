@@ -1,14 +1,16 @@
 import json
 import re
+import os
 
 # Text Cleaning
 
 # load custom legal stopwords and abbreviations
-with open('legal_stopwords.json', 'r') as f:
-    legal_stopwords = set(json.load(f))
+current_dir = os.path.dirname(__file__)
 
-with open('legal_abbreviations.json', 'r') as f:
+with open(os.path.join(current_dir, '../data/legal_abbreviations.json'), 'r') as f:
     legal_abbreviations = json.load(f)
+with open(os.path.join(current_dir, '../data/legal_stopwords.json'), 'r') as f:
+    legal_stopwords = json.load(f)
 
 def clean_legal_text(text):
     """
