@@ -38,5 +38,5 @@ def tokenize_legal_text(text):
     return tokenized_text
 
 # # Example usage
-# tokenized = tokenize_legal_text(cleaned_text)
-# print(tokenized)
+ tokenized = tokenize_legal_text(cleaned_text)
+ print(tokenized)
