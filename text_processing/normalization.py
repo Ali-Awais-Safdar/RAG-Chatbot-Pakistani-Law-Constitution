@@ -2,14 +2,16 @@ from nltk.stem import WordNetLemmatizer
 from nltk.stem.porter import PorterStemmer
 from textblob import TextBlob
 import json
+import os
 
 # Text Normalization
 
 lemmatizer = WordNetLemmatizer()
 stemmer = PorterStemmer()
 
-# Load custom legal term dictionary
-with open('legal_terms.json', 'r') as f:
+current_dir = os.path.dirname(__file__)
+
+with open(os.path.join(current_dir, '../data/legal_terms.json'), 'r') as f:
     legal_terms = json.load(f)
 
 def normalize_legal_text(tokens):
@@ -27,7 +29,7 @@ def normalize_legal_text(tokens):
     Returns:
         list of str: The list of normalized tokens.
     """
-    
+
     normalized_tokens = []
     i = 0
     while i < len(tokens):
