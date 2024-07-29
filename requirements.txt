@@ -1,0 +1,13 @@
+numpy
+thinc
+opencv-python
+tesseract
+pytesseract
+pdf2image
+pillow
+pandas
+spacy
+nltk
+PyPDF2
+pdfminer.six
+python-Levenshtein
