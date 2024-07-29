@@ -1,4 +1,13 @@
 def tokenize_legal_text(text):
+    """
+    Tokenizes legal text into sentences and words using custom patterns.
+
+    Args:
+        text (str): The input legal text to be tokenized.
+
+    Returns:
+        list of list of str: A nested list where each sublist contains tokens from a sentence.
+    """
     # Simplified sentence splitting based on common punctuation
     sentences = re.split(r'(?<=[.!?])\s+', text)
     
