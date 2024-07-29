@@ -29,3 +29,5 @@ for text in example_texts:
     extracted = extract_patterns(text)
     print_extracted_patterns(extracted)
     print("\n" + "="*50 + "\n")
+
+
