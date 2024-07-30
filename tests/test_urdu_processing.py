@@ -45,5 +45,3 @@ class TestUrduTextProcessing(unittest.TestCase):
         expected_urdu = "حکومت خود مختار ہے"
         self.assertEqual(latin_to_urdu(latin_text), expected_urdu)
 
-if __name__ == '__main__':
-    unittest.main()
