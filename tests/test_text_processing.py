@@ -1,6 +1,7 @@
 from text_processing.cleaning import clean_legal_text
 from text_processing.normalization import normalize_legal_text
-from pattern_matching import extract_patterns
+from text_processing.pattern_matching import extract_patterns
+from text_processing.tokenization import tokenize_legal_text
 import unittest
 
 class TestCleanLegalText(unittest.TestCase):
@@ -39,6 +40,11 @@ class TestCleanLegalText(unittest.TestCase):
         sample_text = "Hello, World! @2024 & #Python"
         expected_result = "hello world 2024 python"
         self.assertEqual(clean_legal_text(sample_text), expected_result)
+    
+    # def test_sentences_with_citations(self):
+    #     text = "Sec.1.2 The court finds that the defendant Mr. Smith violated Sec.3(a)-2 of the Act."
+    #     expected_output = "Sec.1.2 the court finds that the defendant Mr. Smith violated Sec.3(a)-2 of the Act"
+    #     self.assertEqual(tokenize_legal_text(text), expected_output)
 
 class TestNormalizeLegalText(unittest.TestCase):
 
@@ -89,7 +95,7 @@ class TestNormalizeLegalText(unittest.TestCase):
         tokens = ["unknown", "terms", "should", "be", "lemmatized", "and", "stemmed"]
         expected_output = ["unknown", "term", "should", "be", "lemmat", "and", "stem"]
         self.assertEqual(normalize_legal_text(tokens), expected_output)
-
+        
 class TestPatternExtraction(unittest.TestCase):
 
     def test_case_citations(self):
@@ -121,4 +127,42 @@ class TestPatternExtraction(unittest.TestCase):
         text = "[Adultery.] Rep. by the Offences of Zina (Enforcement of Hudood) Ordinance, 1979 (VII of 1979), s. 19 (w.e.f the 10th day of February, 1979)."
         result = extract_patterns(text)
         self.assertEqual(result["repealed_statements"], ["Rep. by the Offences of Zina (Enforcement of Hudood) Ordinance, 1979 (VII of 1979), s. 19 (w.e.f the 10th day of February, 1979)"])
+
+class TestTokenizeLegalText(unittest.TestCase):
+    
+    def test_simple_sentence(self):
+        text = "The court is in session."
+        expected_output = [["The", "court", "is", "in", "session", "."]]
+        self.assertEqual(tokenize_legal_text(text), expected_output)
+    
+    def test_sentence_with_abbreviations(self):
+        text = "The US Supreme Court ruled in favor."
+        expected_output = [["The", "US", "Supreme", "Court", "ruled", "in", "favor", "."]]
+        self.assertEqual(tokenize_legal_text(text), expected_output)
+    
+    def test_sentence_with_numbers(self):
+        text = "The court imposed a fine of Rs 100."
+        expected_output = [["The", "court", "imposed", "a", "fine", "of", "Rs", "100", "."]]
+        self.assertEqual(tokenize_legal_text(text), expected_output)
+
+    def test_empty_input(self):
+        text = ""
+        expected_output = [[]]
+        self.assertEqual(tokenize_legal_text(text), expected_output)
+
+    def test_sentence_with_legal_terms(self):
+        text = "The plaintiff filed a motion for summary judgment"
+        expected_output = [["The", "plaintiff", "filed", "a", "motion", "for", "summary", "judgment"]]
+        self.assertEqual(tokenize_legal_text(text), expected_output)
+
+    # def test_sentence_with_citations(self):
+    #     text = "See Roe v. Wade, 410 U.S. 113 (1973)."
+    #     expected_output = [["See", "Roe", "v.", "Wade", ",", "410", "U.S.", "113", "(", "1973", ")", "."]]
+    #     self.assertEqual(tokenize_legal_text(text), expected_output)
+        
+    # def test_sentences_with_citations(self):
+    #     text = "Sec.1.2 The court finds that the defendant Mr Smith violated Sec.3(a)-2 of the Act. The court orders the defendant to pay a fine of 100."
+    #     expected_output = [["Sec.1.2", "The", "court", "finds", "that", "the", "defendant", "Mr", "Smith", "violated", "Sec.3(a)-2", "of", "the", "Act", "."], ["The", "court", "orders", "the", "defendant", "to", "pay", "a", "fine", "of", "100", "."]]
+    #     self.assertEqual(tokenize_legal_text(text), expected_output)
+
 
