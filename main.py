@@ -1,5 +1,5 @@
 import cv2
-from my_package import preprocess_image, perform_ocr
+from text_processing import preprocess_image, perform_ocr
 
 # Example usage
 image_path = r'C:\Users\PMLS\Desktop\RAG\sample.jpg'
