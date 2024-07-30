@@ -1,5 +1,6 @@
 from text_processing.cleaning import clean_legal_text
 from text_processing.normalization import normalize_legal_text
+from text_processing.pattern_matching import extract_patterns
 from text_processing.tokenization import tokenize_legal_text
 import unittest
 
@@ -94,6 +95,38 @@ class TestNormalizeLegalText(unittest.TestCase):
         tokens = ["unknown", "terms", "should", "be", "lemmatized", "and", "stemmed"]
         expected_output = ["unknown", "term", "should", "be", "lemmat", "and", "stem"]
         self.assertEqual(normalize_legal_text(tokens), expected_output)
+        
+class TestPatternExtraction(unittest.TestCase):
+
+    def test_case_citations(self):
+        text = "In the case of Smith v. Jones, 123 F.2d 456 (2022)."
+        result = extract_patterns(text)
+        self.assertEqual(result["case_citations"], ["Smith v. Jones, 123 F.2d 456 (2022)"])
+
+    def test_statute_references(self):
+        text = "Refer to 123 U.S.C. § 456 for details."
+        result = extract_patterns(text)
+        self.assertEqual(result["statute_references"], ["123 U.S.C. § 456"])
+
+    def test_dates(self):
+        text = "The hearing date was set for Aug 15, 2024."
+        result = extract_patterns(text)
+        self.assertEqual(result["dates"], ["Aug 15, 2024"])
+
+    def test_acts_references(self):
+        text = "This is defined in the Act, 1979."
+        result = extract_patterns(text)
+        self.assertEqual(result["acts_references"], ["Act, 1979"])
+
+    def test_sections(self):
+        text = "Refer to Section 123(a) for more information."
+        result = extract_patterns(text)
+        self.assertEqual(result["sections"], ["Section 123(a)"])
+
+    def test_repealed_statements(self):
+        text = "[Adultery.] Rep. by the Offences of Zina (Enforcement of Hudood) Ordinance, 1979 (VII of 1979), s. 19 (w.e.f the 10th day of February, 1979)."
+        result = extract_patterns(text)
+        self.assertEqual(result["repealed_statements"], ["Rep. by the Offences of Zina (Enforcement of Hudood) Ordinance, 1979 (VII of 1979), s. 19 (w.e.f the 10th day of February, 1979)"])
 
 class TestTokenizeLegalText(unittest.TestCase):
     
@@ -131,4 +164,5 @@ class TestTokenizeLegalText(unittest.TestCase):
     #     text = "Sec.1.2 The court finds that the defendant Mr Smith violated Sec.3(a)-2 of the Act. The court orders the defendant to pay a fine of 100."
     #     expected_output = [["Sec.1.2", "The", "court", "finds", "that", "the", "defendant", "Mr", "Smith", "violated", "Sec.3(a)-2", "of", "the", "Act", "."], ["The", "court", "orders", "the", "defendant", "to", "pay", "a", "fine", "of", "100", "."]]
     #     self.assertEqual(tokenize_legal_text(text), expected_output)
+
 
