@@ -1,7 +1,6 @@
 import pytesseract as pt
 from PIL import Image
 
-    
 def ocr( image_path, lang='eng+urd'):
         img = Image.open(image_path)
         text = pt.image_to_string(img, lang=lang)
