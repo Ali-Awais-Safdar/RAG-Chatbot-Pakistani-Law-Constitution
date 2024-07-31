@@ -30,10 +30,3 @@ def post_correction_ocr(text, legal_dict):
     corrected_text = re.sub(r'(\d+)\s*[F|f]\s*(\d+)', r'\1F.\2', corrected_text)
     return corrected_text
 
-if __name__ == "__main__":
-    legal_dictionary_path = input('Enter Legal Dictionary Path: ')
-    text = input('Enter OCR Text: ')
-
-    legal_dict = load_legal_dictionary(legal_dictionary_path)
-    corrected_text = post_correction_ocr(text, legal_dict)
-    print(f"Corrected Text: {corrected_text}")

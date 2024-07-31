@@ -13,16 +13,3 @@ class OCR:
         conf_avg = sum(int(x) for x in confidence['conf'] if x != '-1') / len(confidence['conf'])
         return text, conf_avg
 
-if __name__ == "__main__":
-    import os
-
-    os.chdir("/mnt/c/Users/muhammad.hadi/Downloads")
-    pt.pytesseract.tesseract_cmd = r'/usr/bin/tesseract'
-    
-    image_path = input('Enter Image Path: ')
-    legal_dictionary_path = input('Enter Legal Dictionary Path: ')
-
-    ocr_instance = OCR(image_path, legal_dictionary_path)
-    text, confidence = ocr_instance.ocr(image_path)
-    print(f"Extracted Text: {text}")
-    print(f"Confidence: {confidence}")
