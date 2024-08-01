@@ -20,6 +20,11 @@ class TestCleanLegalText(unittest.TestCase):
         sample_text = ("135. Abetment WAPDA of desertion of soldier, sailor [or] [airman.] ")
         expected_result = ("abetment Water and Power Development Authority desertion soldier sailor or airman")
         self.assertEqual(clean_legal_text(sample_text), expected_result)
+
+    def test_more_complex_text(self):
+        sample_text = ("By A.O., the Govt. or govt. has decided to include WAPDA and PC for max or max. profit p/a. ")
+        expected_result = ("Administrative Order government government decided include Water and Power Development Authority Privatization Commission maximum maximum profit per annum")
+        self.assertEqual(clean_legal_text(sample_text), expected_result)
     
     def test_empty_string(self):
         sample_text = ""
@@ -41,10 +46,10 @@ class TestCleanLegalText(unittest.TestCase):
         expected_result = "hello world 2024 python"
         self.assertEqual(clean_legal_text(sample_text), expected_result)
     
-    # def test_sentences_with_citations(self):
-    #     text = "Sec.1.2 The court finds that the defendant Mr. Smith violated Sec.3(a)-2 of the Act."
-    #     expected_output = "Sec.1.2 the court finds that the defendant Mr. Smith violated Sec.3(a)-2 of the Act"
-    #     self.assertEqual(tokenize_legal_text(text), expected_output)
+    def test_sentences_with_citations(self):
+        text = "Sec.1.2 The court finds that the defendant Mr. Smith violated Sec.3(a)-2 of the Act."
+        expected_output = "Sec.1.2 court finds defendant mr smith violated Sec.3(a)-2 act"
+        self.assertEqual(clean_legal_text(text), expected_output)
 
 class TestNormalizeLegalText(unittest.TestCase):
 
