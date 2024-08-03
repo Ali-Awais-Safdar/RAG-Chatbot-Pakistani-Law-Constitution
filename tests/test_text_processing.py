@@ -58,7 +58,6 @@ class TestNormalizeLegalText(unittest.TestCase):
         tokens = ["The", "courts", "finding", "overruled", "previous", "judgment"]
         expected_output = ["the", "court", "find", "rejected", "prior", "judgement"]
         
-        
     def test_normalize_legal_text_with_legal_term_2(self):
         # Test with tokens that do not include legal terms
         tokens = ["their", "findings", "are", "overruled"]
@@ -159,15 +158,16 @@ class TestTokenizeLegalText(unittest.TestCase):
         text = "The plaintiff filed a motion for summary judgment"
         expected_output = [["The", "plaintiff", "filed", "a", "motion", "for", "summary", "judgment"]]
         self.assertEqual(tokenize_legal_text(text), expected_output)
-
-    # def test_sentence_with_citations(self):
-    #     text = "See Roe v. Wade, 410 U.S. 113 (1973)."
-    #     expected_output = [["See", "Roe", "v.", "Wade", ",", "410", "U.S.", "113", "(", "1973", ")", "."]]
-    #     self.assertEqual(tokenize_legal_text(text), expected_output)
         
-    # def test_sentences_with_citations(self):
-    #     text = "Sec.1.2 The court finds that the defendant Mr Smith violated Sec.3(a)-2 of the Act. The court orders the defendant to pay a fine of 100."
-    #     expected_output = [["Sec.1.2", "The", "court", "finds", "that", "the", "defendant", "Mr", "Smith", "violated", "Sec.3(a)-2", "of", "the", "Act", "."], ["The", "court", "orders", "the", "defendant", "to", "pay", "a", "fine", "of", "100", "."]]
-    #     self.assertEqual(tokenize_legal_text(text), expected_output)
+    def test_sentences_with_citations(self):
+        text = "Sec.1.2 The court finds that the defendant Mr Smith violated Sec.3(a)-2 of the Act. The court orders the defendant to pay a fine of 100."
+        expected_output = [["Sec.1.2", "The", "court", "finds", "that", "the", "defendant", "Mr", "Smith", "violated", "Sec.3(a)-2", "of", "the", "Act", "."], ["The", "court", "orders", "the", "defendant", "to", "pay", "a", "fine", "of", "100", "."]]
+        self.assertEqual(tokenize_legal_text(text), expected_output)
+
+    def test_sentences_with_citations_2(self):
+        text = "Sec. 1.2 Art. 184(3) the Ordinance 784 court also sec. 6.8 Sec. 1.2 finds Art. 9 hiding act 67. Sec.3.5 Sec.6(8)-d defendant 114 Stat. 899 mr smith violated Sec. 3(a)-2 act. Art. 184(3) on Pg. 45 also Sec. 4.66 constitution PPC 4444 important. Sec. 4 and Pakistan Penal Code 1860 implies that Companies Ordinance 1984 often referenced refers to PLD 2020 SC 1 case law Rule 5(10). SRO 123(I)/2020 is also relevant. 18th Amendment brought significant changes. Presidential Order No. 1 of 1977 issued 3rd Amendment also cool refer Notification No. 1234-G/2020 Anti-Terrorism Act 1997 Review Petition No. 567/2020 filed check 2019 clc 123 relevant high court cases Income Tax Ordinance 2001 also cited 144 Stat. 789 also states thing AIR 1990 SC 123 important precedent Constitution Petition No. 45/2021. ECP Order No. 123/2019 notable Companies Ord 1984 also checkeddefinition queen omitted A.O., 1961 Art. 2 and school (w.e.f. the 23rd March, 1956) case smith volume jones 123 f2d 456 2022 court interpreted Section 123(a) act hearing date set aug 15 2024 adultery report offences zina enforcement hudood Ordinance, 1979 (VII of 1979), s. 19 (w.e.f the 10th day of February, 1979) workmens breach contract repealing Act, 1925 (III of 1925), s. 2 school"
+        expected_output = [['Sec. 1.2', 'Art. 184(3)', 'the', 'Ordinance 784', 'court', 'also', 'sec. 6.8', 'Sec. 1.2', 'finds', 'Art. 9', 'hiding', 'act 67', '.'], ['Sec.3.5', 'Sec.6(8)-d', 'defendant', '114 Stat. 899', 'mr', 'smith', 'violated', 'Sec. 3(a)-2', 'act', '.'], ['Art. 184(3)', 'on', 'Pg. 45', 'also', 'Sec. 4.66', 'constitution', 'PPC 4444', 'important', '.'], ['Sec. 4', 'and', 'Pakistan Penal Code 1860', 'implies', 'that', 'Companies Ordinance 1984', 'often', 'referenced', 'refers', 'to', 'PLD 2020 SC 1', 'case', 'law', 'Rule 5(10)', '.'], ['SRO 123(I)/2020', 'is', 'also', 'relevant', '.'], ['18th Amendment', 'brought', 'significant', 'changes', '.'], ['Presidential Order No. 1 of 1977', 'issued', '3rd Amendment', 'also', 'cool', 'refer', 'Notification No. 1234-G/2020', 'Anti-Terrorism Act 1997', 'Review Petition No. 567/2020', 'filed', 'check', '2019', 'clc', '123', 'relevant', 'high', 'court', 'cases', 'Income Tax Ordinance 2001', 'also', 'cited', '144 Stat. 789', 'also', 'states', 'thing', 'AIR 1990 SC 123', 'important', 'precedent', 'Constitution Petition No. 45/2021', '.'], ['ECP Order No. 123/2019', 'notable', 'Companies Ord 1984', 'also', 'checkeddefinition', 'queen', 'omitted', 'A.O., 1961', 'Art. 2', 'and', 'school', '(w.e.f. the 23rd March, 1956)', 'case', 'smith', 'volume', 'jones', '123', 'f2d', '456', '2022', 'court', 'interpreted', 'Section 123(a)', 'act', 'hearing', 'date', 'set', 'aug', '15', '2024', 'adultery', 'report', 'offences', 'zina', 'enforcement', 'hudood', 'Ordinance, 1979 (VII of 1979), s. 19', '(w.e.f the 10th day of February, 1979)', 'workmens', 'breach', 'contract', 'repealing', 'Act, 1925 (III of 1925), s. 2', 'school']]
+        self.assertEqual(tokenize_legal_text(text), expected_output)
+
 
 
