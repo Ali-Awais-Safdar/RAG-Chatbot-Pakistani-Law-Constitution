@@ -42,8 +42,7 @@ def clean_legal_text(text):
     text = ' '.join([word if word in legal_abbreviations else word.lower() for word in text.split()])
 
     # removing stopwords
-    words = text.split()
-    words = [word for word in words if word not in legal_stopwords]
+    words = [word for word in text.split() if word not in legal_stopwords]
     text = ' '.join(words)  
 
     # expanding the abbreviations 
@@ -63,18 +62,21 @@ def clean_legal_text(text):
     for placeholder, citation in placeholders.items():
         text = text.replace(placeholder, citation)
 
+    # remove underscores
+    text = text.replace('_', '')
+
     # normalizing whitespace
     text = re.sub(r'\s+', ' ', text).strip()
 
     return text
 
 # sample_text = """
-# Sec. 1.2 and the Art. 184(3) The Ordinance 784 court also sec. 6.8 finds Art. 9 hiding Act. 67 from Sec.3.5 and Sec.6(8)-d that the defendant 114 Stat. 899 Mr. Smith violated Sec. 3(a)-2 of the Act.
+# Sec. 1.2 and the Art. 184(3) The Ordinance 784 court also sec. 6.8 Sec. 1.2 finds Art. 9 hiding Act. 67 from Sec.3.5 and Sec.6(8)-d that the defendant 114 Stat. 899 Mr. Smith violated Sec. 3(a)-2 of the Act.
 # Art. 184(3) on Pg. 45 also Sec. 4.66 of the Constitution PPC 4444 is important. Sec. 4 of the Pakistan Penal Code 1860 and Companies Ordinance 1984 
 # are often referenced. Refer to PLD 2020 SC 1 for case law. Rule 5(10) and SRO 123(I)/2020 are also relevant.
 # The 18th Amendment brought significant changes. Presidential Order No. 1 of 1977 was issued. The 3rd Amendment is also cool
 # Refer to Notification No. 1234-G/2020 and The Anti-Terrorism Act 1997. Review Petition No. 567/2020 was filed.
-# Check 2019 CLC 123 for relevant High Court cases. The Income Tax Ordinance 2001 is also cited. The 144 Stat. 789 also states the same thing.
+# Check 2019 CLC 123 for relevant _ High Court__ cases. The Income Tax Ordinance 2001 is also cited. The 144 Stat. 789 also states the same thing.
 # AIR 1990 SC 123 is an important precedent. Constitution Petition No. 45/2021 and ECP Order No. 123/2019 are notable.
 # Companies Ord 1984 should also be checked.[Definition of “Queen”.] Omitted by A.O., 1961, Art. 2 and Sch. (w.e.f. the 23rd March, 1956).
 #     In the case of Smith v. Jones, 123 F.2d 456 (2022), the court interpreted Section 123(a) of the Act. The hearing date was set for Aug 15, 2024.,

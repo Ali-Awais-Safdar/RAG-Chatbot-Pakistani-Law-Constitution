@@ -405,5 +405,11 @@
   "overruled": "rejected",
   "overrules": "rejects",
   "previous": "prior",
-  "bargain": "deal"
+  "bargain": "deal",
+  "violated": "violate",
+  "violates": "violate",
+  "violating": "violate",
+  "violation": "violate",
+  "violations": "violate",
+  "violate": "violate"
 }

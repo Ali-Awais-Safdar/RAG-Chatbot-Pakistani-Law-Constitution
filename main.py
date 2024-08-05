@@ -1,7 +1,7 @@
 import cv2
 #from text_processing import preprocess_image, perform_ocr
 import unittest
-from tests.test_text_processing import TestCleanLegalText
+from tests.test_text_processing import TestTokenizeLegalText, TestCleanLegalText, TestNormalizeLegalText, TestPatternExtraction
 
 # Example usage
 # image_path = r'C:\Users\PMLS\Desktop\RAG\sample.jpg'
@@ -13,5 +13,5 @@ from tests.test_text_processing import TestCleanLegalText
 # print("OCR Result:")
 # print(text)
 
-# Run tests
-unittest.TextTestRunner().run(unittest.TestLoader().loadTestsFromTestCase(TestCleanLegalText))
+# # Run tests
+# unittest.TextTestRunner().run(unittest.TestLoader().loadTestsFromTestCase(TestTokenizeLegalText))
