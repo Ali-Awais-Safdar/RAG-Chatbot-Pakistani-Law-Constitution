@@ -21,6 +21,6 @@ from .normalization import normalize_legal_text
 from .tokenization import tokenize_legal_text
 from .pattern_matching import extract_patterns
 
-__all__ = ['clean_legal_text', 'normalize_legal_text', 'tokenize_legal_text','extract_patterns']
+__all__ = ["clean_legal_text", "normalize_legal_text", "tokenize_legal_text","extract_patterns"]
 
-__version__ = '1.0.0'
+__version__ = "1.0.0"
