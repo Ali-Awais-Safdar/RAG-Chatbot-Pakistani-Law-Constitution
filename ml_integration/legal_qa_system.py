@@ -141,14 +141,8 @@ def legal_qa_system(question, documents, model, tokenizer):
     Returns:
         str: The final answer to the legal question.
     """
-    if not question:
-        raise ValueError("The question cannot be empty.")
-    if not isinstance(question, str):
-        raise TypeError("Question can only be a string")
-    if not documents:
-        raise ValueError("Documents are empty")
-    if not isinstance(documents, list):
-        raise TypeError("Documents can only be a list")
+    if not question or not isinstance(question, str) or not documents or not isinstance(documents, list):
+        return None
     
     processed_question, tokens, entities = preprocess_question(question)
     relevant_segments = retrieve_relevant_segments(processed_question, documents)
@@ -173,8 +167,22 @@ def load_legal_documents():
         "Copyright law in Pakistan is governed by the Copyright Ordinance of 1962.",
         "In Pakistan, copyright infringement is considered a serious offense."
     ]
+def load_sample_documents():
+    """
+    Loads the corpus of legal documents that will be used for retrieving relevant information.
 
-def load_model():
+    Returns:
+        list of str: A list of legal documents as strings.
+    """
+    # Implement logic to load legal documents
+    return [
+        "Under Pakistani law, copyright infringement is a punishable offense.",
+        "The penalty for copyright infringement may include fines and imprisonment.",
+        "The Copyright Ordinance 1962 outlines the penalties for copyright infringement.",
+        "Copyright law in Pakistan is governed by the Copyright Ordinance of 1962.",
+        "In Pakistan, copyright infringement is considered a serious offense."
+    ]
+def load_finetuned_model():
     model_name = "deepset/roberta-base-squad2"
     fine_tuned_model = AutoModelForQuestionAnswering.from_pretrained(model_name)
     tokenizer = AutoTokenizer.from_pretrained(model_name)
