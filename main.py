@@ -20,7 +20,7 @@ from ml_integration.legal_qa_system import legal_qa_system, load_legal_documents
 # unittest.TextTestRunner().run(unittest.TestLoader().loadTestsFromTestCase(TestNormalizeLegalText))
 # unittest.TextTestRunner().run(unittest.TestLoader().loadTestsFromTestCase(TestTokenizeLegalText))
 
-question = """What is the penalty for copyright infringement in Pakistan?"""
+question = """What is the penalty for copyright infringement?"""
 documents = load_legal_documents() # Implement this function to load your legal corpus
 fine_tuned_model, tokenizer = load_model()
 if documents and isinstance(documents, list):
@@ -29,7 +29,7 @@ if documents and isinstance(documents, list):
     cleaned_documents.append(clean_legal_text(documents[i]))
   print(cleaned_documents)
   answer = legal_qa_system(question, cleaned_documents, fine_tuned_model, tokenizer)
-  print(f"Question: {question}")
+  print(f"\nQuestion: {question}")
   print(f"Answer: {answer}")
 else:
   print("Wrong Documents")
