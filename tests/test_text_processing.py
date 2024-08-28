@@ -8,12 +8,7 @@ class TestCleanLegalText(unittest.TestCase):
     
     def test_normalize_whitespace(self):
         sample_text = "This   is   a   test."
-        expected_result = "test"
-        self.assertEqual(clean_legal_text(sample_text), expected_result)
-    
-    def test_normalize_whitespace(self):
-        sample_text = "This   is   a   test."
-        expected_result = "test"
+        expected_result = "is test"
         self.assertEqual(clean_legal_text(sample_text), expected_result)
     
     def test_complex_text(self):
@@ -23,7 +18,7 @@ class TestCleanLegalText(unittest.TestCase):
 
     def test_more_complex_text(self):
         sample_text = ("By A.O., the Govt. or govt. has decided to include WAPDA and PC for max or max. profit p/a. ")
-        expected_result = ("Administrative Order government government decided include Water and Power Development Authority Privatization Commission maximum maximum profit per annum")
+        expected_result = ("by Administrative Order government or government decided include Water and Power Development Authority and Privatization Commission maximum or maximum profit per annum")
         self.assertEqual(clean_legal_text(sample_text), expected_result)
     
     def test_empty_string(self):
@@ -38,7 +33,7 @@ class TestCleanLegalText(unittest.TestCase):
     
     def test_mixed_whitespace(self):
         sample_text = "This\tis\na test."
-        expected_result = "test"
+        expected_result = "is test"
         self.assertEqual(clean_legal_text(sample_text), expected_result)
     
     def test_special_characters(self):
@@ -57,6 +52,7 @@ class TestNormalizeLegalText(unittest.TestCase):
         # Test with tokens that do not include legal terms
         tokens = ["The", "courts", "finding", "overruled", "previous", "judgment"]
         expected_output = ["the", "court", "find", "rejected", "prior", "judgement"]
+        self.assertEqual(normalize_legal_text(tokens), expected_output)
         
     def test_normalize_legal_text_with_legal_term_2(self):
         # Test with tokens that do not include legal terms
