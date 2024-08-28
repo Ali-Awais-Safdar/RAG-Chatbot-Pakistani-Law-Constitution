@@ -19,19 +19,19 @@ from ml_integration import legal_qa_system, load_sample_documents, load_finetune
 # # Run tests
 # unittest.TextTestRunner().run(unittest.TestLoader().loadTestsFromTestCase(TestCleanLegalText))
 # unittest.TextTestRunner().run(unittest.TestLoader().loadTestsFromTestCase(TestNormalizeLegalText))
-unittest.TextTestRunner().run(unittest.TestLoader().loadTestsFromTestCase(TestLegalQASystem))
+# unittest.TextTestRunner().run(unittest.TestLoader().loadTestsFromTestCase(TestLegalQASystem))
 
-# question = """What is the penalty for copyright infringement?"""
-# documents = load_sample_documents() # Implement this function to load your legal corpus
-# fine_tuned_model, tokenizer = load_finetuned_model()
-# if documents and isinstance(documents, list):
-#   cleaned_documents = []
-#   for i in range(len(documents)):
-#     cleaned_documents.append(clean_legal_text(documents[i]))
-#   print(cleaned_documents)
-#   answer = legal_qa_system(question, cleaned_documents, fine_tuned_model, tokenizer)
-#   print(f"\nQuestion: {question}")
-#   print(f"Answer: {answer}")
-# else:
-#   print("Wrong Documents")
+question = """What is the penalty for copyright infringement?"""
+documents = load_sample_documents() # Implement this function to load your legal corpus
+fine_tuned_model, tokenizer = load_finetuned_model()
+if documents and isinstance(documents, list):
+  cleaned_documents = []
+  for i in range(len(documents)):
+    cleaned_documents.append(clean_legal_text(documents[i]))
+  print(cleaned_documents)
+  answer = legal_qa_system(question, cleaned_documents, fine_tuned_model, tokenizer)
+  print(f"\nQuestion: {question}")
+  print(f"Answer: {answer}")
+else:
+  print("Wrong Documents")
 
