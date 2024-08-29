@@ -1,7 +1,12 @@
 from text_processing.cleaning import clean_legal_text
 from text_processing.normalization import normalize_legal_text
 from text_processing.pattern_matching import extract_patterns
+from text_processing.pos_tagging import train_legal_pos_tagger
 from text_processing.tokenization import tokenize_legal_text
+from spacy.training import Example
+
+import spacy
+
 import unittest
 
 class TestCleanLegalText(unittest.TestCase):
@@ -170,4 +175,66 @@ class TestTokenizeLegalText(unittest.TestCase):
         self.assertEqual(tokenize_legal_text(text), expected_output)
 
 
+# Load the SpaCy model and add the custom component
+nlp = spacy.load("en_core_web_sm")
+
+@spacy.Language.component("legal_pos_tagger")
+def legal_pos_tagger(doc):
+    # Implement custom POS tagging logic here
+    for token in doc:
+        if token.text in ["Section", "Act", "Court", "Defendant"]:
+            token.tag_ = "LEGAL_TERM"
+    return doc
+
+nlp.add_pipe("legal_pos_tagger", after="tagger")
+
+
+class TestLegalPOSTagger(unittest.TestCase):
+
+    def test_legal_term_tagging(self):
+        """Test if legal terms are correctly tagged as LEGAL_TERM"""
+        text = "The court finds that the defendant violated Section 123 of the Act."
+        doc = nlp(text)
+        # Expected results
+        expected_tags = {
+            "court": "LEGAL_TERM",
+            "defendant": "LEGAL_TERM",
+            "Section": "LEGAL_TERM",
+            "Act": "LEGAL_TERM"
+        }
+        
+        for token in doc:
+            if token.text in expected_tags:
+                self.assertEqual(token.tag_, expected_tags[token.text], 
+                                 f"Token '{token.text}' should be tagged as LEGAL_TERM")
+            else:
+                self.assertNotEqual(token.tag_, "LEGAL_TERM", 
+                                    f"Token '{token.text}' should not be tagged as LEGAL_TERM")
+
+    def test_non_legal_term_tagging(self):
+        """Test that non-legal terms are not tagged as LEGAL_TERM"""
+        text = "The quick brown fox jumps over the lazy dog."
+        doc = nlp(text)
+        for token in doc:
+            self.assertNotEqual(token.tag_, "LEGAL_TERM", 
+                                f"Token '{token.text}' should not be tagged as LEGAL_TERM")
+
+    def test_empty_text(self):
+        """Test the behavior with an empty string"""
+        text = ""
+        doc = nlp(text)
+        self.assertEqual(len(doc), 0, "The document should be empty for an empty input text")
+
+    def test_train_legal_pos_tagger(self):
+        """Test the training function to ensure it runs without errors"""
+        train_data = [
+            ("The court ruled in favor of the defendant.", 
+             {"words": ["The", "court", "ruled", "in", "favor", "of", "the", "defendant", "."], 
+              "tags": ["DET", "LEGAL_TERM", "VERB", "ADP", "NOUN", "ADP", "DET", "LEGAL_TERM", "PUNCT"]}),
+        ]
+        try:
+            trained_nlp = train_legal_pos_tagger(train_data)
+            self.assertTrue(True, "Training function executed without errors")
+        except Exception as e:
+            self.fail(f"Training function raised an exception: {e}")
 
